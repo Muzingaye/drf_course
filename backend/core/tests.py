@@ -27,7 +27,7 @@ class ContactTestCase(APITestCase):
         response = self.client.post(self.url, data)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(Contact.objects.count(), 1)
-        self.assertEqual(Contact.objects.get().title, "Billy Smith")
+        self.assertEqual(Contact.objects.get().title, "Muzi Dube")
 
     def test_create_contact_without_name(self):
         '''
