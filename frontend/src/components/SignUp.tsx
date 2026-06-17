@@ -1,12 +1,17 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 
 const SignUp = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    console.log(email + " " + password);
+  function onSubmit(data) {
+    console.log(`${data.email}`);
     // alert("submitted");
   }
   return (
@@ -15,7 +20,7 @@ const SignUp = () => {
         <h1 className="p-8">Sign Up</h1>
       </div>
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="w-80 rounded-b-lg place-items-center border border-black-1"
       >
         <div className="m-1">
@@ -25,9 +30,13 @@ const SignUp = () => {
               type="email"
               placeholder="me@example.com"
               className="justify-end"
+              {...register("email", { required: "Email is required" })}
               onChange={(e) => setEmail(e.target.value)}
             />
           </label>
+          {errors.email && (
+            <p className="text-red-800">{errors.email.message}</p>
+          )}
         </div>
 
         <div className="m-1">
@@ -36,9 +45,23 @@ const SignUp = () => {
             <input
               type="password"
               placeholder="your password"
+              {...register("password", {
+                required: "Password is required",
+                minLength: {
+                  value: 4,
+                  message: "Password must be atleast 4 chars",
+                },
+                maxLength: {
+                  value: 12,
+                  message: "Password must be most 12 chars",
+                },
+              })}
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
+          {errors.password && (
+            <p className="text-red-800">{errors.password.message}</p>
+          )}
         </div>
 
         <div className="m-4 justify-center">
