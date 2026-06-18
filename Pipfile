@@ -15,6 +15,7 @@ python-dotenv = "*"
 pytz = "*"
 sqlparse = "*"
 tzdata = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 
