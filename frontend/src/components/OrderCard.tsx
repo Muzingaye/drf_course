@@ -5,7 +5,11 @@ const OrderCard = ({ order }) => {
   return (
     <div>
       <div className="product-card">
-        <img src={order.id} className="product-card-image" />
+        <img
+          src={order.image}
+          alt="{oeder.image}"
+          className="product-card-image"
+        />
         <div className="product-card-content">
           <h3 className="product-card-name">{order.name}</h3>
           <p className="product-card-price">{order.price}</p>

@@ -1,6 +1,7 @@
 export type Order = {
   id: number;
   Title: string;
+  image: string;
   Description: string;
   Status: string;
   ActivateDate: string;
