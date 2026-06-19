@@ -1,21 +1,32 @@
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
+import React, { useContext, useState } from "react";
+import { useForm, type SubmitHandler } from "react-hook-form";
+import { AuthContext } from "../context/AuthContext";
 
+interface AuthFormData {
+  user: string;
+  password?: string;
+}
 const Auth = () => {
-  const [user, setUser] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-
-  const [mode, setMode] = useState<string>("signup");
-
+  const [mode, setMode] = useState<"signup" | "login">("signup");
+  const authContext = useContext(AuthContext);
+  if (!authContext) {
+    console.log("Auth component must be used within an AuthProvider");
+    //throw new Error("Auth component must be used within an AuthProvider");
+  }
+  const { signUp, login } = authContext;
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm<AuthFormData>();
 
-  function onSubmit() {
-    alert("something");
-  }
+  const onSubmit: SubmitHandler<AuthFormData> = (data) => {
+    if (mode === "signup") {
+      signUp(data.user, data.password || "");
+    } else {
+      login?.(data.user, data.password || "");
+    }
+  };
 
   return (
     <div className="flex flex-col justify-center m-6 bg-gray-100 rounded-lg border border-black-100">
