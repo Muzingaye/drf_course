@@ -20,15 +20,33 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     const existingUser = localStorage.getItem("user");
     const userList = existingUser ? JSON.parse(existingUser) : [];
 
+    if (userList.find((u) => u.user === user)) {
+      return { success: false, error: "Error already exists" };
+    }
     userList.push({ user, password });
+    localStorage.setItem("users", JSON.stringify(userList));
     localStorage.setItem("users", JSON.stringify(userList));
 
     setUser(user);
+
+    return { success: true };
   }
 
-  function login() {}
+  function login(user: string, password: string) {
+    const existingUser = localStorage.getItem("user");
+    const userList = existingUser ? JSON.parse(existingUser) : [];
+
+    if (userList.find((u) => u.user === user)) {
+      return { success: false, error: "Error already exists" };
+    }
+  }
+
+  function logout() {
+    localStorage.removeItem("user");
+    setUser(null);
+  }
   return (
-    <AuthContext.Provider value={{ user, signUp, login }}>
+    <AuthContext.Provider value={{ user, signUp, logout }}>
       {children}
     </AuthContext.Provider>
   );

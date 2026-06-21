@@ -13,7 +13,7 @@ const Auth = () => {
     console.log("Auth component must be used within an AuthProvider");
     //throw new Error("Auth component must be used within an AuthProvider");
   }
-  const { signUp, login } = authContext;
+  const { signUp, user, logout } = authContext;
   const {
     register,
     handleSubmit,
@@ -32,6 +32,8 @@ const Auth = () => {
     <div className="flex flex-col justify-center m-6 bg-gray-100 rounded-lg border border-black-100">
       <div className="container">
         <div className="auth-container">
+          {user && <p> User Logged in {user}</p>}
+          <button onClick={() => logout()}>Logout</button>
           <h1 className="p-8">{mode === "signup" ? "Sign Up" : "Login"}</h1>
           <form
             onSubmit={handleSubmit(onSubmit)}
